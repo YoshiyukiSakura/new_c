@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Rule;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -12,6 +13,7 @@ use app\models\ContactForm;
 
 class SiteController extends Controller
 {
+    public $enableCsrfValidation = false;
     /**
      * @inheritdoc
      */
@@ -45,7 +47,7 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        $rule = Rule::findOne(['path'=>$_SERVER['REQUEST_URI']]);
+        $rule = Rule::findOne(['forward_path'=>$_SERVER['REQUEST_URI']]);
         if ($rule){
             return $rule->source_address;
         }
